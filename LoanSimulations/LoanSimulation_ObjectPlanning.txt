@@ -1,0 +1,80 @@
+Loan
+    Values:
+        double Principle; ($) #amount borrowed
+        double InterestRate: (1/year) #rate of interest accurment
+        double Length: (year) #length of the loan
+            default = 10
+        double CurrentInterest: #amount of outstanding Interest to date
+        double TotalBalance: #Current Interest
+    Functions:
+        int CalculateInterest(double months) #calulates the current amount of interest
+        int MakePayment(double payment) #pays off loan 
+        int CapitalizeLoan() #takes curent interest and adds it to the Principle
+
+
+PaymentSchedule(ABC) #Abstract Base Class for the Various Payment Schedules
+    Values: 
+        double CurrentPayment #Amount Payed Per Month
+        double Payment_Frequency # number of payments per year
+            default = 12
+        double CurrentTimeStep:
+
+    Functions:
+        double CurrentPayment() #amount to pay
+        @abstractmethod
+        none SetMonthlyPayment(Loan) #absract method to be called in each class' constructor
+
+#Simple Payment Plans (Good For Early Code Prototyping)
+
+Standard_Repayment(PaymentSchedule)
+    Values:
+
+    Functions:
+        none SetMonthlyPayment(Loan) #Amortized Loan Payment
+            A = P[r(1+r)^n]/[(1+r)^n - 1]
+
+Extended_Repayment(PaymentSchedule)
+    Values:
+    double Adjusted Loan Length
+    Functions:
+        none SetMonthlyPayment(Loan)
+        #Amortized Loan Payment with extended loan time
+            A = P[r(1+r)^n]/[(1+r)^n - 1]
+
+Graduated_Repayment(PaymentSchedule)
+    Values:
+    double ReducedPaymentPeriod: #Length of time the loan payment value is reduced
+
+    Functions:
+        none SetMonthlyPayment(Loan)
+            #Assumption: Interest Only Payment
+            #After ReducedPaymentPeriod Take Current Balance and Calculate Standard Repayment
+
+#Complex Payment Schedules (Implement After Creating the Basics )
+
+IBR(PaymentSchedule)
+    Values:
+
+    Functions:
+        none SetMonthlyPayment(Loan)
+
+ICR(PaymentSchedule)
+    Values:
+
+    Functions:
+        none SetMonthlyPayment(Loan)
+
+PAYE(PaymentSchedule)
+    Values:
+
+    Functions:
+        none SetMonthlyPayment(Loan)
+
+REPAYE(PaymentSchedule)
+    Values:
+
+    Functions:
+        none SetMonthlyPayment(Loan)
+
+
+
